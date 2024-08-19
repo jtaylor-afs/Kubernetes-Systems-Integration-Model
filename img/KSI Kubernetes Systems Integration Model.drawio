@@ -1,0 +1,121 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36" version="24.7.7">
+  <diagram name="Page-1" id="n-lexcogeqo8KFA-pu7G">
+    <mxGraphModel dx="2270" dy="1832" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ltim616Ee7lUGfIPKq6D-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="3R5DfV5Cr-LWsuCk4zCQ-1" target="ltim616Ee7lUGfIPKq6D-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-7" value="Broken" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ltim616Ee7lUGfIPKq6D-6">
+          <mxGeometry x="-0.08" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="3R5DfV5Cr-LWsuCk4zCQ-1" target="ltim616Ee7lUGfIPKq6D-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-15" value="Working" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ltim616Ee7lUGfIPKq6D-14">
+          <mxGeometry x="0.0077" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3R5DfV5Cr-LWsuCk4zCQ-1" value="&lt;b style=&quot;&quot;&gt;&lt;font color=&quot;#ff0000&quot;&gt;Application&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;b style=&quot;&quot;&gt;&lt;font color=&quot;#ff0000&quot;&gt;(START HERE)&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" parent="1" vertex="1">
+          <mxGeometry x="80" y="420" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="3R5DfV5Cr-LWsuCk4zCQ-2" value="KSI Model Layer" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" parent="1" vertex="1">
+          <mxGeometry x="-290" y="230" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-2" value="kubectl get pods&lt;div&gt;&lt;div&gt;kubectl get job,deploy,rs,ds,sts&lt;/div&gt;&lt;div&gt;kubectl api-resources | grep &amp;lt;app api name&amp;gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;kubectl logs &amp;lt;working pods&amp;gt;&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="330" y="400" width="320" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-3" value="Common troubleshooting commands in order from most common and simplest to most complex and deeper troubleshooting&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;All kubectl commands assume default namespace. All commands will need `--namespace &amp;lt;namespace&amp;gt;` if not in default.&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="-330" y="310" width="320" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-4" value="We are checking to see if our application is running and appearing fully functional in cluster or not. If at any point the app is obviously not working (pods 0/2 or CRD unready), stop and continue to the next model layer:&lt;div&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;kubectl get pods: &lt;/b&gt;do all pods show Running with all containers fully up (eg. 2/2)?&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;color: rgb(51, 51, 51); text-align: center;&quot;&gt;&lt;b&gt;kubectl get job,deploy,rs,ds,sts:&lt;/b&gt; sometimes pods all show Running but there is a broken part of the application that never deployed pods. Jobs, Deployments, ReplicaSets (from Deployments), DaemonSets, and StatefulSets are the source of a vast majority of pods that can be scheduled. They should all show full up and Ready&lt;/span&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;color: rgb(51, 51, 51); text-align: center;&quot;&gt;&lt;b&gt;kubectl api-resources | grep &amp;lt;app api name&amp;gt;&lt;/b&gt;: digging deeper, sometimes the source of the resources types in the second bullet are handled via an operator and our operator may have not deployed the Deployment making our app appear healthy. This troubleshooting line is not perfect and there are other ways to check (minio APIs for example are names min.io so grep would fail). For this check CRDs with tags with the app name (&lt;b&gt;kubectl get crd --show-labels | grep &amp;lt;app name&amp;gt;&lt;/b&gt;). Once CRDs are found, check them:&lt;br&gt;&lt;/span&gt;&lt;/li&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;color: rgb(51, 51, 51); text-align: center;&quot;&gt;kubectl api-resources | grep prometheus&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;color: rgb(51, 51, 51); text-align: center;&quot;&gt;&amp;lt;CRDs installed by prometheus returned&amp;gt;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;color: rgb(51, 51, 51); text-align: center;&quot;&gt;kubectl get prometheus&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;color: rgb(51, 51, 51); text-align: center;&quot;&gt;&amp;lt;0/1 prometheus ready&amp;gt;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;li&gt;&lt;font color=&quot;#333333&quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;&lt;b&gt;kubectl logs &amp;lt;working pods&amp;gt;:&lt;/b&gt; Lastly, if all looks good and healthy, sometimes pods can appear to be fully running but the logs will have breaking conditions that the app developers did not account for making Kubernetes believe the app is working&lt;/span&gt;&lt;br&gt;&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;" vertex="1" parent="1">
+          <mxGeometry x="660" y="280" width="560" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ltim616Ee7lUGfIPKq6D-5" target="ltim616Ee7lUGfIPKq6D-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-5" value="Resource" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="775" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-8" value="&lt;div&gt;kubectl logs &amp;lt;broken resource&amp;gt;&lt;/div&gt;&lt;div&gt;kubectl describe &amp;lt;broken resource&amp;gt;&lt;/div&gt;&lt;div&gt;kubectl get events&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="330" y="750" width="320" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-9" value="We are checking the broken resource found in the Application Layer troubleshooting to further drill down to our root issue:&lt;div&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;kubectl logs &amp;lt;broken pod&amp;gt;: &lt;/b&gt;often the best troubleshooting command when something is broken. We are usually looking for application specific breaks when it comes to logs of a Pod or Deployment or CRD. Other notable variants often overlooked:&lt;/li&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;kubectl logs&amp;nbsp;&lt;b&gt;&amp;lt;broken pod&amp;gt;&amp;nbsp;&lt;/b&gt;-c &amp;lt;container name&amp;gt;: &lt;/b&gt;pods with multiple containers will default often to the latest container but if the issue is in a sidecar or init container, they can often be missed&lt;/li&gt;&lt;li&gt;&lt;b&gt;kubectl logs&amp;nbsp;&lt;b&gt;&amp;lt;broken pod&amp;gt;&amp;nbsp;&lt;/b&gt;--previous:&lt;/b&gt; not always great, but can sometimes return logs from a previous failed attempt (if a pod fails then CrashLoopBackoffs immediately, it can be easy to miss the final error that killed it)&lt;/li&gt;&lt;li&gt;&lt;b&gt;kubectl logs -f&amp;nbsp;&lt;/b&gt;&lt;b&gt;&amp;lt;broken pod&amp;gt;: &lt;/b&gt;live tracking of the pod logs as they are happening&lt;/li&gt;&lt;/ul&gt;&lt;li&gt;&lt;span style=&quot;color: rgb(51, 51, 51); text-align: center;&quot;&gt;&lt;b&gt;kubectl describe &amp;lt;broken resource&amp;gt;:&lt;/b&gt; often the broken resource is at the Kubernetes layer and not the application layer. Describing the resource will display the latest events for that resource and highlight things like image pulling errors or lack of compute or storage resources&lt;/span&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;color: rgb(51, 51, 51); text-align: center;&quot;&gt;&lt;b&gt;kubectl events&lt;/b&gt;: this should be after an attempt to describe as getting events in a namespace will return &lt;i&gt;all &lt;/i&gt;events, many of which were successful events for other resources you are not attempting to troubleshoot. BUT, kubectl describe only shows recent events by default. Variants:&lt;/span&gt;&lt;/li&gt;&lt;ul&gt;&lt;li&gt;kubectl events --for pod/web-pod-13je7&lt;/li&gt;&lt;li&gt;kubectl events --types=Warning,Failed&lt;/li&gt;&lt;li&gt;kubectl events --types!=Normal&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;" vertex="1" parent="1">
+          <mxGeometry x="660" y="640" width="560" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-10" value="Research" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="1070" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-12" value="Now that we have information on our failure, we need to fix the issue. This can be anything from resource constraints on the cluster to broken applications and so much more. This step is to simply take what you have learned (log errors, event errors) and research to find steps to fix." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;" vertex="1" parent="1">
+          <mxGeometry x="340" y="1050" width="560" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="ltim616Ee7lUGfIPKq6D-13" target="ltim616Ee7lUGfIPKq6D-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7pBeO7LdVijHJPXLNzoA-11" value="Working/Broken" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="ltim616Ee7lUGfIPKq6D-19">
+          <mxGeometry x="-0.0316" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-13" value="Distribution" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="100" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="ltim616Ee7lUGfIPKq6D-16" target="ltim616Ee7lUGfIPKq6D-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7pBeO7LdVijHJPXLNzoA-10" value="Working/Broken" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="ltim616Ee7lUGfIPKq6D-20">
+          <mxGeometry x="0.0235" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-16" value="Infrastructure" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="-390" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="ltim616Ee7lUGfIPKq6D-17" target="ltim616Ee7lUGfIPKq6D-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7pBeO7LdVijHJPXLNzoA-9" value="Broken" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="ltim616Ee7lUGfIPKq6D-21">
+          <mxGeometry x="-0.1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-17" value="Environment" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="-620" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-18" value="Research" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="-820" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7pBeO7LdVijHJPXLNzoA-1" value="Detailed explanation of troubleshooting commands" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="-330" y="440" width="320" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="ltim616Ee7lUGfIPKq6D-22" target="ltim616Ee7lUGfIPKq6D-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-24" value="Working/Broken" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ltim616Ee7lUGfIPKq6D-23">
+          <mxGeometry x="0.0222" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-22" value="Access (Ingress)" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="-150" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-25" value="&lt;div&gt;kubectl get nodes&lt;/div&gt;&lt;div&gt;kubectl get pods -n kube-system&lt;/div&gt;&lt;div&gt;kubectl get storageclass&lt;/div&gt;&lt;div&gt;kubectl get pods -n &amp;lt;CNI namespace&amp;gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="330" y="75" width="320" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-26" value="&lt;div&gt;kubectl get svc&lt;/div&gt;&lt;div&gt;kubectl exec -it &amp;lt;other pod&amp;gt; -- curl &amp;lt;internal svc&amp;gt;&lt;/div&gt;&lt;div&gt;kubectl get ingress&lt;/div&gt;&lt;div&gt;kubectl get &amp;lt;ingress controller CRD&amp;gt;&lt;/div&gt;&lt;div&gt;aws elb describe-load-balancers&lt;br&gt;&lt;/div&gt;&lt;div&gt;nslookup &amp;lt;app domain&amp;gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="330" y="-175" width="320" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-27" value="aws commands&lt;div&gt;deeper dig to LBs - verify ports, egress and ingress, backchannel ports matching ingress controller, front channel address matching DNS records&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="330" y="-415" width="320" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="ltim616Ee7lUGfIPKq6D-28" value="DNS resolution&lt;div&gt;validate security group and ACL settings&lt;br&gt;&lt;/div&gt;&lt;div&gt;Permissions&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="330" y="-645" width="320" height="110" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
